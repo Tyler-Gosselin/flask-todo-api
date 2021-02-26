@@ -12,3 +12,11 @@
 $ pipenv shell
 $ python app.py
 ```
+
+## How to create the Database
+```
+$ pipenv shell
+$ python
+>>> from app import db
+>>> db.create_all()
+``` 
