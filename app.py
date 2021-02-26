@@ -40,17 +40,14 @@ def hello():
 
 
 # Create a Todo
-@app.route('/api/add-todos', methods=['POST'])
+@app.route('/api/add-todo', methods=['POST'])
 def add_todo():
     title = request.json['title']
     done = request.json['done']
     new_todo = Todo(title, done)
     db.session.add(new_todo)
     db.session.commit()
-    todo = Todo.query.get(new_todo.id)
-    print(todo)
-    print(todo_schema.jsonify(todo))
-    return todo_schema.jsonify(todo)
+    return todo_schema.jsonify(new_todo)
 
 # Get all the Todos
 @app.route('/api/get-all-todos', methods=['GET'])
@@ -68,8 +65,6 @@ def edit_done(todo_id):
     db.session.commit()
     return todo_schema.jsonify(todo)
     
-
-
 # Delete a todo
 
 
