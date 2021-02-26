@@ -39,6 +39,26 @@ def hello():
     return "Hello World!"
 
 
+# Create a Todo
+@app.route('/api/add-todo', methods=['POST'])
+def add_todo():
+    title = request.json['title']
+    done = request.json['done']
+    new_todo = Todo(title, done)
+    db.session.add(new_todo)
+    db.session.commit()
+    todo = Todo.query.get(new_todo.id)
+    print(todo)
+    print(todo_schema.jsonify(todo))
+    return todo_schema.jsonify(todo)
+
+# Get all the Todos
+
+# Edit a Todo's "done" field
+
+# Delete a todo
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
