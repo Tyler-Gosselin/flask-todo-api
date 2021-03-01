@@ -7,9 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
-    os.path.join(basedir, "app.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -52,6 +50,8 @@ def add_todo():
     return todo_schema.jsonify(new_todo)
 
 # Get all the Todos
+
+
 @app.route('/api/get-all-todos', methods=['GET'])
 def get_all_todos():
     all_todos = Todo.query.all()
@@ -68,6 +68,8 @@ def edit_done(todo_id):
     return todo_schema.jsonify(todo)
 
 # Delete a todo
+
+
 @app.route('/api/delete-todo/<todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
     todo = Todo.query.get(todo_id)
